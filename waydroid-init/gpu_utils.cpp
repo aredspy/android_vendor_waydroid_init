@@ -43,6 +43,16 @@ void GpuUtils::getKernelDriver() {
     }
 
     this->gpuKernelDriverName = driverPath.filename();
+
+    // virtio normalize check
+    if (this->gpuKernelDriverName == "virtio-pci" ||
+        this->gpuKernelDriverName == "virtio_pci" ||
+        this->gpuKernelDriverName == "virtio-mmio" ||
+        this->gpuKernelDriverName == "virtio_mmio" ||
+        this->gpuKernelDriverName == "virtio_gpu") {
+        this->gpuKernelDriverName = driverPath.replace_filename("virtio-gpu")
+    }
+    
     Log::info("GPU kernel driver: {}", this->gpuKernelDriverName);
 }
 
